@@ -32,6 +32,8 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'tpope/vim-abolish' " For case perserved subtitue :%S
 Plug 'scrooloose/nerdcommenter'
 Plug 'terryma/vim-multiple-cursors'
+" Plug 'christoomey/vim-tmux-navigator'
+
 call plug#end()
 
 filetype plugin indent on
@@ -94,10 +96,10 @@ nnoremap <ESC><ESC> :nohlsearch<CR>
 vmap D y'>p
 
 " Map Emacs like movement in Insert mode
-inoremap <C-n> <Down>
-inoremap <C-p> <Up>
-inoremap <C-f> <Right>
-inoremap <C-b> <Left>
+inoremap <M-j> <Down>
+inoremap <M-k> <Up>
+inoremap <M-l> <Right>
+inoremap <M-h> <Left>
 inoremap <C-e> <C-o>$
 inoremap <C-a> <C-o>^
 
