@@ -28,11 +28,11 @@ Plug 'easymotion/vim-easymotion'
 Plug 'vim-scripts/matchit.zip'
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
-Plug 'haya14busa/incsearch.vim'
 Plug 'tpope/vim-abolish' " For case perserved subtitue :%S
 Plug 'scrooloose/nerdcommenter'
 Plug 'terryma/vim-multiple-cursors'
 " Plug 'christoomey/vim-tmux-navigator'
+Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
 
 call plug#end()
 
@@ -139,10 +139,6 @@ set undoreload=10000
 
 let g:NERDSpaceDelims = 1
 map mm <Plug>NERDCommenterToggle
-
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
 
 " Floating Term
 let s:float_term_border_win = 0
@@ -493,7 +489,7 @@ let g:multi_cursor_select_all_word_key = '<C-L>'
 let g:multi_cursor_start_key           = 'g<C-d>'
 let g:multi_cursor_select_all_key      = 'g<C-L>'
 let g:multi_cursor_next_key            = '<C-d>'
-let g:multi_cursor_prev_key            = '<C-p>'
+" let g:multi_cursor_prev_key            = '<C-p>'
 let g:multi_cursor_skip_key            = '<C-i>'
 let g:multi_cursor_quit_key            = '<Esc>'
 
