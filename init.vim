@@ -18,7 +18,6 @@ Plug 'neoclide/coc-denite'
 Plug 'scrooloose/nerdtree'
 Plug 'itchyny/lightline.vim'
 Plug 'ryanoasis/vim-devicons'
-Plug 'Shougo/denite.nvim'
 Plug 'tyrannicaltoucan/vim-quantum'
 " Auto root folder switcher
 Plug 'airblade/vim-rooter'
@@ -323,7 +322,7 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 " Use L to highlight the symbol under the cursor
-nnoremap <silent> L :call CocActionAsync('highlight')<CR>
+" nnoremap <silent> L :call CocActionAsync('highlight')<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -407,81 +406,6 @@ nnoremap zs :<C-U>exe DescribeFace(v:count)<CR>
 let g:rooter_change_directory_for_non_project_files = 'current'
 let g:rooter_patterns = ['Cargo.tom', 'package.json', '.git/']
 
-" DENITE
-call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
-call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--heading', '-S'])
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
-call denite#custom#source('grep', 'converters', ['converter/abbr_word'])
-call denite#custom#option('_', 'max_dynamic_update_candidates', 100000)
-call denite#custom#var('outline', 'command', ['ctags'])
-" Tell ctags write tags to stdin, so Denite can pick it up
-call denite#custom#var('outline', 'options', ['-f -', '--excmd=number'])
-
-let s:denite_options = {
-      \ 'prompt' : '',
-      \ 'split': 'floating',
-      \ 'start_filter': 1,
-      \ 'auto_resize': 1,
-      \ 'source_names': 'short',
-      \ 'direction': 'botright',
-      \ 'statusline': 0,
-      \ 'cursorline': 0,
-      \ 'highlight_matched_char': 'WildMenu',
-      \ 'highlight_matched_range': 'WildMenu',
-      \ 'highlight_window_background': 'Visual',
-      \ 'highlight_filter_background': 'CocListMagentaGray',
-      \ 'highlight_preview_line': 'Cursor',
-      \ 'vertical_preview': 1
-      \ }
-
-call denite#custom#option('default', s:denite_options)
-
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-    nnoremap <silent><buffer><expr> <CR>
-                \ denite#do_map('do_action')
-    nnoremap <silent><buffer><expr> d
-                \ denite#do_map('do_action', 'delete')
-    nnoremap <silent><buffer><expr> <c-p>
-                \ denite#do_map('do_action', 'preview')
-    nnoremap <silent><buffer><expr> q
-                \ denite#do_map('quit')
-    nnoremap <silent><buffer><expr> i
-                \ denite#do_map('open_filter_buffer')
-    nnoremap <silent><buffer><expr> <c-a>
-                \ denite#do_map('toggle_select_all')
-    nnoremap <silent><buffer><expr> <c-t>
-                \ denite#do_map('toggle_select').'j'
-endfunction
-
-autocmd FileType denite-filter call s:denite_filter_my_settings()
-function! s:denite_filter_my_settings() abort
-    imap <silent><buffer> <tab> <Plug>(denite_filter_quit)
-    inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
-    inoremap <silent><buffer><expr> <c-a>
-                \ denite#do_map('toggle_select_all')
-    inoremap <silent><buffer><expr> <c-t>
-                \ denite#do_map('toggle_select')
-    inoremap <silent><buffer><expr> <c-o>
-                \ denite#do_map('do_action', 'quickfix')
-    inoremap <silent><buffer><expr> <esc>
-                \ denite#do_map('quit')
-    inoremap <silent><buffer> <C-j>
-                \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
-    inoremap <silent><buffer> <C-k>
-                \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
-endfunction
-
-nnoremap \ :Denite grep<CR>
-nnoremap <Leader>pf :Denite file/rec<CR>
-nnoremap <Leader>pr :Denite file/old buffer<CR>
-nnoremap <C-o> :Denite outline<CR>
-map * :Denite -resume -refresh<CR>
-
 " Multiple Cursor
 let g:multi_cursor_use_default_mapping=0
 let g:multi_cursor_start_word_key      = '<C-d>'
@@ -502,8 +426,5 @@ highlight Normal guibg=NONE
 highlight EasyMotionTargetDefault guifg=#ffb400
 highlight NonText guifg=#354751
 highlight VertSplit guifg=#212C32
-highlight link deniteSource_SymbolsName Symbol
-highlight link deniteSource_SymbolsHeader String
-highlight link deniteSource_grepLineNR deniteSource_grepFile
 highlight WildMenu guibg=NONE guifg=#87bb7c
 highlight CursorLineNr guibg=NONE
