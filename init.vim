@@ -42,6 +42,20 @@ autocmd BufWritePre * %s/\s\+$//e
 
 let g:loaded_clipboard_provider = 1
 
+" coc config
+let g:coc_global_extensions = [
+  \ 'coc-snippets',
+  \ 'coc-pairs',
+  \ 'coc-tsserver',
+  \ 'coc-eslint',
+  \ 'coc-prettier',
+  \ 'coc-json',
+  \ 'coc-go',
+  \ 'coc-phpls',
+  \ 'coc-python',
+  \ 'coc-highlight',
+  \ ]
+
 set encoding=UTF-8
 set hidden
 set nobackup
