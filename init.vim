@@ -56,6 +56,31 @@ let g:coc_global_extensions = [
   \ 'coc-highlight',
   \ ]
 
+" NERDTree
+" sync open file with NERDTree
+" " Check if NERDTree is open or active
+function! IsNERDTreeOpen()
+  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+endfunction
+
+" Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
+" file, and we're not in vimdiff
+function! SyncTree()
+  if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
+    NERDTreeFind
+    wincmd p
+  endif
+endfunction
+
+" Highlight currently open buffer in NERDTree
+autocmd BufEnter * call SyncTree()
+
+
+
+
+" Use L to highlight the symbol under the cursor
+nnoremap <silent> Y :call CocActionAsync('highlight')<CR>
+
 set encoding=UTF-8
 set hidden
 set nobackup
@@ -78,7 +103,7 @@ set ttyfast
 set laststatus=2
 set ttimeout
 set ttimeoutlen=10
-set termguicolors
+" set termguicolors
 set ignorecase
 
 " Tweak for Markdown mode
@@ -97,7 +122,7 @@ let g:coc_status_warning_sign=" "
 
 " I don't use recording, don't judge me
 map q <Nop>
-inoremap jk <ESC>
+inoremap jj <ESC>
 vnoremap <M-/> <Esc>/\%V
 nnoremap <Left> :echoe "Use h"<CR>
 nnoremap <Right> :echoe "Use l"<CR>
@@ -108,11 +133,12 @@ nnoremap <ESC><ESC> :nohlsearch<CR>
 " Duplicate everything selected
 vmap D y'>p
 
-" Map Emacs like movement in Insert mode
 inoremap <M-j> <Down>
 inoremap <M-k> <Up>
 inoremap <M-l> <Right>
 inoremap <M-h> <Left>
+
+" Map Emacs like movement in Insert mode
 inoremap <C-e> <C-o>$
 inoremap <C-a> <C-o>^
 
@@ -219,9 +245,9 @@ nnoremap <Leader>qk :call DeleteCurrentFileAndBuffer()<CR>
 nnoremap <Leader>ss :mksession! .work<CR>
 nnoremap <Leader>sr :so .work<CR>
 nnoremap <Leader><Leader>r :so ~/.config/nvim/init.vim<CR>
-nnoremap <Leader>n :NERDTree<CR>
+" nnoremap <Leader>n :NERDTree<CR>
 nnoremap <Leader>f :NERDTreeFind<CR>
-" nmap <C-n> :NERDTreeToggle<CR>
+nmap <C-n> :NERDTreeToggle<CR>
 "Buffer
 nnoremap <Leader>tn :tabn<CR>
 nnoremap <Leader>tp :tabp<CR>
