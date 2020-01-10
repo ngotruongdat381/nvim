@@ -56,7 +56,9 @@ let g:coc_global_extensions = [
   \ 'coc-highlight',
   \ ]
 
+
 " NERDTree
+
 " sync open file with NERDTree
 " " Check if NERDTree is open or active
 function! IsNERDTreeOpen()
@@ -76,6 +78,12 @@ endfunction
 autocmd BufEnter * call SyncTree()
 
 
+" open NERDTree automatically
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * NERDTree
+
+" How can I close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 
 " Use L to highlight the symbol under the cursor
